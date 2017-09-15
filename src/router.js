@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue"
+import VueRouter from "vue-router"
 
-import Hello from '@/Hello.vue'
+import Hello from "@/Hello.vue"
 
 Vue.use(VueRouter)
 
