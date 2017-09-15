@@ -5,14 +5,9 @@ import Hello from '@/Hello.vue'
 
 Vue.use(VueRouter)
 
-/*
- * Uncomment this section and use "load()" if you want
- * to lazy load routes.
-function load (component) {
-  // '@' is aliased to src/components
-  return () => import(`@/${component}.vue`)
+function load (view) {
+  return () => import(`src/views/${view}.vue`)
 }
-*/
 
 export default new VueRouter({
   /*
@@ -28,6 +23,7 @@ export default new VueRouter({
    */
 
   routes: [
-    { path: '/', component: Hello }
+    { path: "/", component: Hello },
+    { path: "/quiz/:id", component: load("QuizView") }
   ]
 })
