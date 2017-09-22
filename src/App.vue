@@ -36,6 +36,7 @@
         </q-list>
       </div>
       <router-view></router-view>
+      <q-ajax-bar :delay="20" :speed="100" size="6px" color="red" position="top"/>
     </q-layout>
   </div>
 </template>
@@ -44,11 +45,12 @@
 /*
  * Root component
  */
-import { QLayout, QToolbar, QToolbarTitle, QBtn, QIcon, QList, QListHeader, QSideLink, QItemSide, QItemMain } from "quasar"
+import { QLayout, QToolbar, QToolbarTitle, QBtn, QIcon, QList, QListHeader, QSideLink, QItemSide, QItemMain, QAjaxBar } from "quasar"
 
 export default {
   data () {
     return {
+      // TODO: Make a custom event to change title and subtitle
       toolbarTitle: "Uniquiz PWA",
       toolbarSubtitle: ""
     }
@@ -63,7 +65,8 @@ export default {
     QListHeader,
     QSideLink,
     QItemSide,
-    QItemMain
+    QItemMain,
+    QAjaxBar
   }
 }
 </script>
