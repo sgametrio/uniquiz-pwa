@@ -99,6 +99,7 @@ export default {
         courseId: this.courseId
       }).then(data => {
         this.$store.commit("updateCurrentQuiz", { quiz: data.data.data })
+        this.$store.commit("prepareQuizSubmission", { quiz: data.data.data })
         // Now I have to change view
         this.$router.push("/quiz/" + data.data.data.id)
       }).catch(data => {

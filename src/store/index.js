@@ -8,7 +8,8 @@ export default new Vuex.Store({
     hostname: "https://uniquiz-api.demetriocarrara.me/api/",
     courses: [],
     currentQuiz: {},
-    premadeQuizzes: []
+    premadeQuizzes: [],
+    quizSubmission: {}
   },
   mutations: {
     updateCourses (state, payload) {
@@ -19,6 +20,30 @@ export default new Vuex.Store({
     },
     updatePremadeQuizzes (state, payload) {
       state.premadeQuizzes = payload.quizzes
+    },
+    updateSubmission (state, payload) {
+      state.quizSubmission = payload.submission
+    },
+    updateAnswersIds (state, payload) {
+      state.quizSubmission.questions[payload.index].answersIds = payload.answersIds
+    },
+    updateAnswerId (state, payload) {
+      state.quizSubmission.questions[payload.index].answerId = payload.answerId
+    },
+    updateOpenAnswerText (state, payload) {
+      state.quizSubmission.questions[payload.index].openAnswerText = payload.openAnswerText
+    },
+    prepareQuizSubmission (state, payload) {
+      state.quizSubmission.id = payload.quiz.id
+      state.quizSubmission.questions = []
+      for (let question of payload.quiz.questions) {
+        state.quizSubmission.questions.push({
+          "id": question.id,
+          "answersIds": [], // Multiple choice answer
+          "openAnswerText": null, // Open answer
+          "answerId": null // Single choice answer
+        })
+      }
     }
   }
 })

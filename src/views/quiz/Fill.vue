@@ -9,7 +9,7 @@
         <!-- Domanda a risposta singola -->
         <div v-if="quiz.questions[selected - 1].solutionType === 'single'">
           <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
-            <q-radio v-model="answersIds[selected - 1]" :val="answer.id" :label="answer.text" />
+            <q-radio v-model="answerId" :val="answer.id" :label="answer.text" />
           </div>
         </div>
 
@@ -22,9 +22,7 @@
 
         <!-- Domanda a risposta aperta -->
         <div v-else>
-          <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
-            {{ answer.text }}
-          </div>
+          <!-- TODO: Insert textbox here -->
         </div>
       </q-card-main>
       <q-card-actions align="center">
@@ -56,14 +54,40 @@ export default {
   },
   data () {
     return {
-      selected: 1,
-      answersIds: []
+      selected: 1
     }
   },
   computed: {
     ...mapState({
       quiz: state => state.currentQuiz
-    })
+    }),
+    // Two-way data-binding between Vuex and UI
+    answersIds: {
+      get () {
+        return this.$store.state.quizSubmission.questions[this.selected - 1].answersIds
+      },
+      set (value) {
+        this.$store.commit("updateAnswersIds", { index: this.selected - 1, answersIds: value })
+      }
+    },
+    answerId: {
+      get () {
+        let value = this.$store.state.quizSubmission.questions[this.selected - 1].answerId
+        console.log(value)
+        return value
+      },
+      set (value) {
+        this.$store.commit("updateAnswerId", { index: this.selected - 1, answerId: value })
+      }
+    },
+    openAnswerText: {
+      get () {
+        return this.$store.state.quizSubmission.questions[this.selected - 1].openAnswerText
+      },
+      set (value) {
+        this.$store.commit("updateOpenAnswerText", { index: this.selected - 1, openAnswerText: value })
+      }
+    }
   },
   methods: {
     submitQuiz () {
