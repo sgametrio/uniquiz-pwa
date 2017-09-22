@@ -24,6 +24,8 @@ export default new VueRouter({
 
   routes: [
     { path: "/", component: Hello },
-    { path: "/quiz/:id", component: load("QuizView") }
+    { path: "/quiz", component: load("quiz/Select") },
+    { path: "/quiz/:id", component: load("quiz/Fill") },
+    { path: "/quiz/:id/score", component: load("quiz/Score") }
   ]
 })

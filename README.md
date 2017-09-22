@@ -1,19 +1,5 @@
-# Quasar PWA App
+# Uniquiz PWA
 
-> A Quasar PWA project
+## TODO
 
-## Build Setup
-
-``` bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:8081
-$ quasar dev
-
-# build for production with minification
-$ quasar build
-
-# lint code
-$ quasar lint
-```
+Consider a11y
