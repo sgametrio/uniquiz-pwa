@@ -5,16 +5,17 @@
       <q-tab slot="title" name="summary" icon="assignment">Summary</q-tab>
 
       <q-tab-pane name="fill-in">
-        <div class="layout-padding">
+        <div class="layout-padding" v-if="Object.keys(quiz).length > 0">
           <q-card>
             <q-card-title>
               {{ quiz.questions[selected - 1].text }}
             </q-card-title>
-            <q-card-separator />
+            <!--<q-card-separator />-->
             <q-card-main>
               <!-- Domanda a risposta singola -->
               <div v-if="quiz.questions[selected - 1].solutionType === 'single'">
                 <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
+                  <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
                   <q-radio v-model="answerId" :val="answer.id" :label="answer.text" />
                 </div>
               </div>
@@ -22,6 +23,7 @@
               <!-- Domanda a risposta multipla -->
               <div v-else-if="quiz.questions[selected - 1].solutionType === 'multiple'">
                 <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
+                  <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
                   <q-checkbox v-model="answersIds" :val="answer.id" :label="answer.text"/>
                 </div>
               </div>
@@ -79,14 +81,24 @@ export default {
       selected: 1,
       answerId: null,
       answersIds: [],
-      openAnswerText: null
+      openAnswerText: null,
+      quizId: this.$route.params.id
+    }
+  },
+  created: function () {
+    // Retrieve quiz if there isn't current one in vuex
+    if (Object.keys(this.quiz).length === 0) {
+      this.$http.get(this.$store.state.hostname + "quizzes/" + this.quizId).then(data => {
+        this.$store.commit("updateCurrentQuiz", { quiz: data.data.data })
+        this.$store.commit("prepareQuizSubmission", { quiz: data.data.data })
+      }).catch(data => {
+        console.log(data)
+      })
     }
   },
   computed: {
     ...mapState({
       quiz: state => state.currentQuiz
-      // I have to try this when I have a working example
-      // submission: state => state.quizSubmission
     })
   },
   watch: {
@@ -114,7 +126,7 @@ export default {
   },
   methods: {
     submitQuiz () {
-      return true
+      // Alert.create({html: "Trying lazy-loading Alert component"})
     }
   }
 }
