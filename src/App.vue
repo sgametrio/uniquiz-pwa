@@ -8,9 +8,12 @@
           <q-icon name="menu" />
         </q-btn>
         <q-toolbar-title>
-          {{ toolbarTitle }}
-          <span slot="subtitle" v-if="toolbarSubtitle">{{ toolbarSubtitle }}</span>
+          {{ toolbar.title }}
+          <span slot="subtitle" v-if="toolbar.subtitle">{{ toolbar.subtitle }}</span>
         </q-toolbar-title>
+        <q-btn v-if="toolbar.btn.text" :icon-right="toolbar.btn.icon" :color="toolbar.btn.color" flat>
+          {{ toolbar.btn.text }}
+        </q-btn>
       </q-toolbar>
 
       <!-- Sidebar -->
@@ -50,9 +53,16 @@ import { QLayout, QToolbar, QToolbarTitle, QBtn, QIcon, QList, QListHeader, QSid
 export default {
   data () {
     return {
-      // TODO: Make a custom event to change title and subtitle
-      toolbarTitle: "Uniquiz PWA",
-      toolbarSubtitle: ""
+      // TODO: Make a custom event to change header config
+      toolbar: {
+        title: "Uniquiz PWA",
+        subtitle: "",
+        btn: {
+          text: "",
+          icon: "send"
+        }
+      }
+
     }
   },
   components: {

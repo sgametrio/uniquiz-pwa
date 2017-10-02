@@ -28,7 +28,7 @@
       <q-card-actions align="end">
         <q-btn
           color="primary"
-          :disabled="courseId.length === 0"
+          :disable="courseId.length === 0"
           icon="create"
           @click="startQuiz">
           Let's go!
