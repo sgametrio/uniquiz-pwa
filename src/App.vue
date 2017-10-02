@@ -11,7 +11,13 @@
           {{ toolbar.title }}
           <span slot="subtitle" v-if="toolbar.subtitle">{{ toolbar.subtitle }}</span>
         </q-toolbar-title>
-        <q-btn v-if="toolbar.btn.text" :icon-right="toolbar.btn.icon" :color="toolbar.btn.color" flat>
+        <q-btn
+          v-if="toolbar.btn.show"
+          :icon-right="toolbar.btn.icon"
+          :color="toolbar.btn.color"
+          flat
+          @click="submitQuiz"
+        >
           {{ toolbar.btn.text }}
         </q-btn>
       </q-toolbar>
@@ -58,7 +64,8 @@ export default {
         title: "Uniquiz PWA",
         subtitle: "",
         btn: {
-          text: "",
+          show: false,
+          text: "submit answers",
           icon: "send"
         }
       }
@@ -77,6 +84,35 @@ export default {
     QItemSide,
     QItemMain,
     QAjaxBar
+  },
+  methods: {
+    submitQuiz () {
+      // This has to be defined into child SFC and pass through something so
+      // parent can call a dynamic function based on what child pass as argument
+    },
+    changeToolbarProps (title = null, subtitle = null, btnText = null, btnShow = null, btnIcon = null) {
+      if (title !== null) {
+        this.toolbar.title = title
+      }
+      if (subtitle !== null) {
+        this.toolbar.subtitle = subtitle
+      }
+      if (btnText !== null) {
+        this.toolbar.btnText = btnText
+      }
+      if (btnIcon !== null) {
+        this.toolbar.btnIcon = btnIcon
+      }
+      if (btnShow !== null) {
+        this.toolbar.btnShow = btnShow
+      }
+    }
+  },
+  created () {
+    this.$q.events.$on("changeToolbarProps", this.changeToolbarProps)
+  },
+  beforeDestroy () {
+    this.$q.events.$off("changeToolbarProps")
   }
 }
 </script>

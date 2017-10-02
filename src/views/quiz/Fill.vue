@@ -1,51 +1,56 @@
 <template>
-  <div class="layout-padding" v-if="Object.keys(quiz).length > 0">
-    <div v-if="!showScore">
-      <q-card>
-        <q-card-title>
-          {{ quiz.questions[selected - 1].text }}
-        </q-card-title>
-        <!--<q-card-separator />-->
-        <q-card-main>
-          <!-- Domanda a risposta singola -->
-          <div v-if="quiz.questions[selected - 1].solutionType === 'single'">
-            <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
-              <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
-              <q-radio v-model="answerId" :val="answer.id" :label="answer.text" />
-            </div>
-          </div>
+  <div>
+    <q-tabs slot="navigation">
+      <q-tab default slot="title" name="fill-in" icon="edit">Fill in</q-tab>
+      <q-tab slot="title" name="summary" icon="assignment">Summary</q-tab>
 
-          <!-- Domanda a risposta multipla -->
-          <div v-else-if="quiz.questions[selected - 1].solutionType === 'multiple'">
-            <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
-              <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
-              <q-checkbox v-model="answersIds" :val="answer.id" :label="answer.text"/>
-            </div>
-          </div>
+      <q-tab-pane name="fill-in">
+        <div class="layout-padding" v-if="Object.keys(quiz).length > 0">
+          <q-card>
+            <q-card-title>
+              {{ quiz.questions[selected - 1].text }}
+            </q-card-title>
+            <q-card-main>
+              <!-- Domanda a risposta singola -->
+              <div v-if="quiz.questions[selected - 1].solutionType === 'single'">
+                <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
+                  <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
+                  <q-radio v-model="answerId" :val="answer.id" :label="answer.text" />
+                </div>
+              </div>
 
-          <!-- Domanda a risposta aperta -->
-          <div v-else>
-            <q-input v-model="openAnswerText" />
-          </div>
-        </q-card-main>
-      </q-card>
+              <!-- Domanda a risposta multipla -->
+              <div v-else-if="quiz.questions[selected - 1].solutionType === 'multiple'">
+                <div v-for="answer of quiz.questions[selected - 1].answers" :key="answer.id">
+                  <q-card-separator style="margin-top:5px; margin-bottom:5px"/>
+                  <q-checkbox v-model="answersIds" :val="answer.id" :label="answer.text"/>
+                </div>
+              </div>
 
-      <q-fixed-position class="fixed-bottom" :offset="[10, 10]">
-        <q-card>
-          <q-pagination class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
-        </q-card>
-      </q-fixed-position>
+              <!-- Domanda a risposta aperta -->
+              <div v-else>
+                <q-input v-model="openAnswerText" />
+              </div>
+            </q-card-main>
+          </q-card>
 
-      <q-fixed-position corner="bottom-right" :offset="[20, 80]">
-        <q-btn color="primary" round icon="send" @click="submitQuiz"></q-btn>
-      </q-fixed-position>
-    </div>
+          <q-fixed-position class="fixed-bottom" :offset="[10, 10]">
+            <q-card>
+              <q-pagination class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
+            </q-card>
+          </q-fixed-position>
+        </div>
+      </q-tab-pane>
 
-    <div v-else>
-      Your score: {{ currentScore }} / {{ maxScore }}
-      <br/>
-      <router-link to="/">Return to home</router-link>
-    </div>
+      <q-tab-pane name="summary">
+        Your score: {{ currentScore }} / {{ maxScore }}
+        <br/>
+        <router-link to="/">Return to home</router-link>
+        <q-fixed-position corner="bottom-right" :offset="[20, 20]">
+          <q-btn color="red" icon-right="send" @click="submitQuiz">Submit answers</q-btn>
+        </q-fixed-position>
+      </q-tab-pane>
+    </q-tabs>
   </div>
 
 </template>
@@ -128,7 +133,6 @@ export default {
       this.$http.post(this.$store.state.hostname + "quizzes/score", {
         "submission": this.$store.state.quizSubmission
       }).then(data => {
-        console.log(data)
         this.currentScore = data.data.score
         this.maxScore = data.data.maxScore
         this.showScore = true
