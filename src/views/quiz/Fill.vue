@@ -1,10 +1,10 @@
 <template>
   <div>
     <q-tabs slot="navigation">
-      <q-tab default slot="title" name="fill-in" icon="edit">Fill in</q-tab>
+      <q-tab default slot="title" name="fill-in" v-if="!showScore" icon="edit">Fill in</q-tab>
       <q-tab slot="title" name="summary" icon="assignment">Summary</q-tab>
 
-      <q-tab-pane name="fill-in">
+      <q-tab-pane name="fill-in" v-if="!showScore">
         <div class="layout-padding" v-if="Object.keys(quiz).length > 0">
           <q-card>
             <q-card-title>
