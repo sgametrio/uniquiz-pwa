@@ -43,12 +43,23 @@
       </q-tab-pane>
 
       <q-tab-pane name="summary">
-        Your score: {{ currentScore }} / {{ maxScore }}
-        <br/>
-        <router-link to="/">Return to home</router-link>
-        <q-fixed-position corner="bottom-right" :offset="[20, 20]">
-          <q-btn color="red" icon-right="send" @click="submitQuiz">Submit answers</q-btn>
-        </q-fixed-position>
+        <div v-if="showScore">
+          Your score: {{ currentScore }} / {{ maxScore }}
+          <br/>
+          <router-link to="/">Return to home</router-link>
+        </div>
+
+        <div v-else>
+          Total questions: {{ quiz.questions.length }}
+          <br/>
+          Questions without an answer: TODO
+          <br />
+          Questions summary: TODO
+          <q-fixed-position corner="bottom-right" :offset="[20, 20]">
+            <q-btn color="red" icon-right="send" @click="submitQuizDialog">Submit answers</q-btn>
+          </q-fixed-position>
+        </div>
+
       </q-tab-pane>
     </q-tabs>
   </div>
@@ -57,7 +68,7 @@
 
 <script>
 import { mapState } from "vuex"
-import { QCard, QCardTitle, QCardSeparator, QCardMain, QPagination, QRadio, QCheckbox, QInput, QFixedPosition, QBtn, QTabs, QTab, QTabPane } from "quasar"
+import { Dialog, QCard, QCardTitle, QCardSeparator, QCardMain, QPagination, QRadio, QCheckbox, QInput, QFixedPosition, QBtn, QTabs, QTab, QTabPane } from "quasar"
 
 export default {
   components: {
@@ -129,7 +140,21 @@ export default {
     }
   },
   methods: {
+    submitQuizDialog () {
+      Dialog.create({
+        title: "Submit your answers",
+        message: "You are going to end the quiz by submitting your answers. Are you sure?",
+        buttons: [
+          "No",
+          {
+            label: "yes",
+            handler: this.submitQuiz
+          }
+        ]
+      })
+    },
     submitQuiz () {
+      // open a dialog to confirm the answers
       this.$http.post(this.$store.state.hostname + "quizzes/score", {
         "submission": this.$store.state.quizSubmission
       }).then(data => {

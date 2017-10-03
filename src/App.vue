@@ -16,7 +16,6 @@
           :icon-right="toolbar.btn.icon"
           :color="toolbar.btn.color"
           flat
-          @click="submitQuiz"
         >
           {{ toolbar.btn.text }}
         </q-btn>
@@ -86,10 +85,6 @@ export default {
     QAjaxBar
   },
   methods: {
-    submitQuiz () {
-      // This has to be defined into child SFC and pass through something so
-      // parent can call a dynamic function based on what child pass as argument
-    },
     changeToolbarProps (title = null, subtitle = null, btnText = null, btnShow = null, btnIcon = null) {
       if (title !== null) {
         this.toolbar.title = title

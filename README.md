@@ -2,8 +2,8 @@
 
 ## TODO
 
-* [views/Fill] Highlight selected answer bg
-* [views/Fill] Increase space between answers or use a separator
+* [views/Fill] Highlight selected answer bg (don't know)
+* [views/Select] Select a course, then choose if random or named one
 * [general] Consider a11y
 * [general] Offline/Online detection
   * Transition between Offline and Online app usage
