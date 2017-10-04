@@ -35,8 +35,8 @@
           </q-card>
 
           <q-fixed-position class="fixed-bottom" :offset="[10, 10]">
-            <q-card>
-              <q-pagination class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
+            <q-card class="bg-amber">
+              <q-pagination color="black" class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
             </q-card>
           </q-fixed-position>
         </div>
@@ -49,7 +49,7 @@
           <router-link to="/">Return to home</router-link>
         </div>
 
-        <div v-else>
+        <div v-else-if="quiz.questions !== undefined">
           Total questions: {{ quiz.questions.length }}
           <br/>
           Questions without an answer: TODO
@@ -168,3 +168,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.q-pagination > .q-input input::-webkit-input-placeholder {
+  color: black;
+}
+</style>
