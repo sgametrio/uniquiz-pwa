@@ -4,7 +4,7 @@
       <q-tab default slot="title" name="fill-in" v-if="!showScore" icon="edit">Fill in</q-tab>
       <q-tab slot="title" name="summary" icon="assignment">Summary</q-tab>
 
-      <q-tab-pane name="fill-in" v-if="!showScore">
+      <q-tab-pane name="fill-in" v-if="!showScore" style="padding-bottom:70px">
         <div class="layout-padding" v-if="Object.keys(quiz).length > 0">
           <q-card>
             <q-card-title>
@@ -35,8 +35,8 @@
           </q-card>
 
           <q-fixed-position class="fixed-bottom" :offset="[10, 10]">
-            <q-card class="bg-amber">
-              <q-pagination color="black" class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
+            <q-card class="bg-white">
+              <q-pagination color="primary" class="justify-center" style="display:flex" v-model="selected" :max="quiz.questions.length" />
             </q-card>
           </q-fixed-position>
         </div>
