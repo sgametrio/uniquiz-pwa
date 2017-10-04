@@ -1,8 +1,6 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import Hello from "@/Hello.vue"
-
 Vue.use(VueRouter)
 
 function load (view) {
@@ -23,7 +21,7 @@ export default new VueRouter({
    */
 
   routes: [
-    { path: "/", component: Hello },
+    { path: "/", component: load("Home") },
     { path: "/quiz", component: load("quiz/Select") },
     { path: "/quiz/:id", component: load("quiz/Fill") }
   ]

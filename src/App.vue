@@ -29,17 +29,9 @@
             <q-item-side icon="school" />
             <q-item-main label="Start a new quiz" />
           </q-side-link>
-          <q-side-link item to="/forum">
+          <q-side-link item to="/contribute">
             <q-item-side icon="record_voice_over" />
-            <q-item-main label="Forum" sublabel="forum.quasar-framework.org" />
-          </q-side-link>
-          <q-side-link item to="/chat">
-            <q-item-side icon="chat" />
-            <q-item-main label="Gitter Channel" sublabel="Quasar Lobby" />
-          </q-side-link>
-          <q-side-link item to="/twitter">
-            <q-item-side icon="rss feed" />
-            <q-item-main label="Twitter" sublabel="@quasarframework" />
+            <q-item-main label="Contribute" sublabel="Add quiz and questions to db" />
           </q-side-link>
         </q-list>
       </div>
@@ -113,4 +105,9 @@ export default {
 </script>
 
 <style>
+/* GLOBAL STYLE */
+.q-tab-pane {
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,0.2);
+}
 </style>
