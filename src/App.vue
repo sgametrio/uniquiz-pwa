@@ -108,6 +108,6 @@ export default {
 /* GLOBAL STYLE */
 .q-tab-pane {
   border: 0;
-  box-shadow: inset 0 5px 5px -5px #333;
+  box-shadow: inset 0 5px 5px -5px rgba(0,0,0,0.4);
 }
 </style>
