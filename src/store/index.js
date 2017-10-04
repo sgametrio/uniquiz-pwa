@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    hostname_local: "http://uniquiz-laravel.dev/api/",
     hostname: "https://uniquiz-api.demetriocarrara.me/api/",
     courses: [],
     currentQuiz: {},

@@ -11,7 +11,7 @@
       <div v-if="premadeQuizzes.length > 0">
         <h5 class="text-center">Start a pre-made quiz</h5>
         <div class="row inline" v-for="quiz of premadeQuizzes" :key="quiz.id">
-          <q-card inline>
+          <q-card inline @click="startQuiz(quiz)">
             <q-card-title>
               {{ quiz.name }}
             </q-card-title>
@@ -33,7 +33,7 @@
             color="primary"
             :disable="courseId.length === 0"
             icon="create"
-            @click="startQuiz">
+            @click="startRandomQuiz">
             Let's go!
           </q-btn>
         </q-card-actions>
@@ -85,37 +85,32 @@ export default {
     }).catch(function (data) {
       console.log(data)
     })
-    /* this.fetchQuizzes().then(data => {
-      this.$store.commit("updatePremadeQuizzes", { quizzes: data.data.data })
-    }).catch(function (data) {
-      console.log(data)
-    }) */
   },
   methods: {
     fetchCourses () {
       return this.$http.get(this.$store.state.hostname + "courses")
     },
-    fetchQuizzes () {
+    /* fetchQuizzes () {
       return this.$http.get(this.$store.state.hostname + "quizzes/named")
-    },
+    }, */
     fetchQuizzesByCourse (course) {
-      return this.$http.get(this.$store.state.hostname + "quizzes/named" /* ,
-        params: {
-          courseId: course
-        } */)
+      return this.$http.get(this.$store.state.hostname + "quizzes/named/" + course)
     },
-    startQuiz () {
+    startRandomQuiz () {
       this.$http.post(this.$store.state.hostname + "quizzes/create", {
         numberOfQuestions: this.numberOfQuestions,
         courseId: this.courseId
       }).then(data => {
-        this.$store.commit("updateCurrentQuiz", { quiz: data.data.data })
-        this.$store.commit("prepareQuizSubmission", { quiz: data.data.data })
-        // Now I have to change view
-        this.$router.push("/quiz/" + data.data.data.id)
+        this.startQuiz(data.data.data)
       }).catch(data => {
         console.log(data)
       })
+    },
+    startQuiz (quiz) {
+      this.$store.commit("updateCurrentQuiz", { quiz: quiz })
+      this.$store.commit("prepareQuizSubmission", { quiz: quiz })
+      // Now I have to change view
+      this.$router.push("/quiz/" + quiz.id)
     },
     updatePremadeQuizzes (selectedCourse) {
       this.fetchQuizzesByCourse(selectedCourse).then(data => {
