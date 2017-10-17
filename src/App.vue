@@ -11,14 +11,6 @@
           {{ toolbar.title }}
           <span slot="subtitle" v-if="toolbar.subtitle">{{ toolbar.subtitle }}</span>
         </q-toolbar-title>
-        <q-btn
-          v-if="toolbar.btn.show"
-          :icon-right="toolbar.btn.icon"
-          :color="toolbar.btn.color"
-          flat
-        >
-          {{ toolbar.btn.text }}
-        </q-btn>
       </q-toolbar>
 
       <!-- Sidebar -->
@@ -53,14 +45,8 @@ export default {
       // TODO: Make a custom event to change header config
       toolbar: {
         title: "Uniquiz PWA",
-        subtitle: "",
-        btn: {
-          show: false,
-          text: "submit answers",
-          icon: "send"
-        }
+        subtitle: ""
       }
-
     }
   },
   components: {
@@ -75,31 +61,6 @@ export default {
     QItemSide,
     QItemMain,
     QAjaxBar
-  },
-  methods: {
-    changeToolbarProps (title = null, subtitle = null, btnText = null, btnShow = null, btnIcon = null) {
-      if (title !== null) {
-        this.toolbar.title = title
-      }
-      if (subtitle !== null) {
-        this.toolbar.subtitle = subtitle
-      }
-      if (btnText !== null) {
-        this.toolbar.btnText = btnText
-      }
-      if (btnIcon !== null) {
-        this.toolbar.btnIcon = btnIcon
-      }
-      if (btnShow !== null) {
-        this.toolbar.btnShow = btnShow
-      }
-    }
-  },
-  created () {
-    this.$q.events.$on("changeToolbarProps", this.changeToolbarProps)
-  },
-  beforeDestroy () {
-    this.$q.events.$off("changeToolbarProps")
   }
 }
 </script>
